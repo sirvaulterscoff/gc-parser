@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+{% block body %}
+<form class="form-horizontal" method="post" action="{{ url_for('submit_log') }}" enctype=multipart/form-data>
+    <fieldset>
+        <legend>Submit GC log</legend>
+        <label class="control-label" for="file1">GC File</label>
+        <div class="controls">
+            <input type="file" name="file1" placeholder="Provide GC file">
+        </div>
+        <button type="submit" class="btn bt-primary">Analyze!</button>
+    </fieldset>
+</form>
+{% endblock %}

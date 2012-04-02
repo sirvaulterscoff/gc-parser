@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+{% block body %}
+<h3>Parse results</h3>
+<div id="gc_time"></div>
+<div id="heap"></div>
+<script>
+    var  gc_times = [
+    {% for gc, timetaken, curr, freed, max_heap  in data %}
+    {"time" : {{ gc }}, "gc_time" : {{ timetaken }} },
+    {% endfor %}
+    ];
+    
+    var  heaps = [
+    {% for gc, timetaken, curr, freed, max_heap  in data %}
+    {"time" : {{ gc }},  "curr" : {{ curr }}, "freed" : {{ freed }} , "heap" : {{ max_heap }} },
+    {% endfor %}
+    ]
+    Morris.Line({
+        element: 'gc_time',
+        data: gc_times,
+        xkey: 'time',
+        ykeys: ['gc_time'],
+        labels: ['Full-GC Time'],
+        lineColors: ['#167f39'],
+        lineWidth: 2
+
+    });
+    Morris.Line({
+        element: 'heap',
+        data: heaps,
+        xkey: 'time',
+        ykeys: [ 'curr', 'freed', 'heap'],
+        labels: [ 'Used heap', 'Freed heap', 'Max heap'],
+        lineColors: [ '#044c29', '#AA0011', '#0000ff'],
+        lineWidth: 2
+
+    });
+</script>
+{% endblock %}
